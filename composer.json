@@ -1,0 +1,19 @@
+{
+    "name": "codespede/simple-multi-threader",
+    "type": "library",
+    "require": {
+        "jeremeamia/superclosure": "^2.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mahesh Warrier",
+            "email": "maheshs60@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "cs\\simplemultithreader\\": "src/"
+        }
+    }
+}
