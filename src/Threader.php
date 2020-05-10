@@ -1,6 +1,7 @@
 <?php
 namespace cs\simplemultithreader;
-use \SuperClosure\Serializer;
+use Opis\Closure\SerializableClosure;
+use function Opis\Closure\{serialize as s, unserialize as u};
 class Threader{
 	public $arguments;
 	public $jobsDir = "smt-jobs";
@@ -23,14 +24,14 @@ class Threader{
     }
 
 	public function thread($closure){
-		$serializer = new Serializer;
 		$jobId = md5(uniqid(rand(), true));
         $jobsDir = $this->getAppBasePath()."/".$this->jobsDir;
-		file_put_contents("{$jobsDir}/{$jobId}_closure.ser", $serializer->serialize($closure));
-        file_put_contents("{$jobsDir}/{$jobId}_arguments.ser", serialize($this->arguments));
+		file_put_contents("{$jobsDir}/{$jobId}_closure.ser", serialize(new SerializableClosure($closure)));
+        file_put_contents("{$jobsDir}/{$jobId}_arguments.ser", s($this->arguments));
         $command = "php ".__DIR__."/thread.php {$jobId} {$this->jobsDir} {$this->logsDir}";
         if(!self::isWindows() && $this->nohup)
         	$command = "nohup {$command} > /dev/null 2>&1 &";
+        die($command);
 		return shell_exec($command);
 	}
 

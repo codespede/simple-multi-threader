@@ -2,7 +2,7 @@
     "name": "codespede/simple-multi-threader",
     "type": "library",
     "require": {
-        "jeremeamia/superclosure": "^2.4"
+        "opis/closure": "*"
     },
     "license": "MIT",
     "authors": [
