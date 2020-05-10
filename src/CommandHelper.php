@@ -2,8 +2,7 @@
 namespace cs\simplemultithreader;
 class CommandHelper
 {
-
-	public function bootstrap(){ //var_dump($this->getFramework()); die;
+	public function bootstrap(){
 		if(is_null($framework = $this->getFramework()))
 			return;
 		$this->{"execute".ucfirst($framework)."Bootstrap"}();
@@ -20,7 +19,7 @@ class CommandHelper
 		}catch(\Exception $e){}
 	}
 
-	public function executeYiiBootStrap(){// die('cc');
+	public function executeYiiBootStrap(){
 		$basePath = $this->getAppBasePath();
 		require($basePath . '/vendor/autoload.php');
 		require($basePath . '/vendor/yiisoft/yii2/Yii.php');
