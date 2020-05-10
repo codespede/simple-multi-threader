@@ -15,23 +15,22 @@ class Threader{
     }
 
     public function init(){
-    	if(!file_exists($this->jobsDir))
-    		mkdir($this->jobsDir, 0777);
-    	if(!file_exists($this->logsDir))
-    		mkdir($this->logsDir, 0777);
+        $basePath = $this->getAppBasePath();
+    	if(!file_exists($basePath."/".$this->jobsDir))
+    		mkdir($basePath."/".$this->jobsDir, 0777);
+    	if(!file_exists($basePath."/".$this->logsDir))
+    		mkdir($basePath."/".$this->logsDir, 0777);
     }
 
 	public function thread($closure){
-        //dd(getcwd());
 		$serializer = new Serializer;
 		$jobId = md5(uniqid(rand(), true));
-
-		file_put_contents("{$this->jobsDir}/{$jobId}_closure.ser", $serializer->serialize($closure));
-        file_put_contents("{$this->jobsDir}/{$jobId}_arguments.ser", serialize($this->arguments));
+        $jobsDir = $this->getAppBasePath()."/".$this->jobsDir;
+		file_put_contents("{$jobsDir}/{$jobId}_closure.ser", $serializer->serialize($closure));
+        file_put_contents("{$jobsDir}/{$jobId}_arguments.ser", serialize($this->arguments));
         $command = "php ".__DIR__."/thread.php {$jobId} {$this->jobsDir} {$this->logsDir}";
         if(!self::isWindows() && $this->nohup)
         	$command = "nohup {$command} > /dev/null 2>&1 &";
-        dd($command);
 		return shell_exec($command);
 	}
 
@@ -44,5 +43,9 @@ class Threader{
             $object->$name = $value;
         }
         return $object;
+    }
+
+    public function getAppBasePath(){
+        return dirname(__DIR__, 4);
     }
 }
