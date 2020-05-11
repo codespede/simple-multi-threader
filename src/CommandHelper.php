@@ -1,13 +1,30 @@
 <?php
+/**
+ * @package   simple-multi-threader
+ * @author    Mahesh S Warrier <maheshs60@gmail.com>
+ * @copyright Copyright &copy; Mahesh S Warrier, 2020
+ * @version   1.0.0
+ */
 namespace cs\simplemultithreader;
+
+/**
+ * Class CommandHelper
+ * @package codespede\simple-multi-threader
+ */
 class CommandHelper
 {
+	/**
+     * Execute bootstrapping code if required.
+     */
 	public function bootstrap(){
 		if(is_null($framework = $this->getFramework()))
 			return;
 		$this->{"execute".ucfirst($framework)."Bootstrap"}();
 	}
 
+	/**
+     * Execute bootstrapping code for Laravel Framework.
+     */
 	public function executeLaravelBootstrap(){
 		$app = require_once $this->getAppBasePath().'/bootstrap/app.php';
 		$kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
@@ -19,6 +36,9 @@ class CommandHelper
 		}catch(\Exception $e){}
 	}
 
+	/**
+     * Execute bootstrapping code for Yii2 Framework.
+     */
 	public function executeYiiBootStrap(){
 		$basePath = $this->getAppBasePath();
 		require($basePath . '/vendor/autoload.php');
@@ -34,14 +54,27 @@ class CommandHelper
 		}catch(\Exception $e){}
 	}
 
+	/**
+     * Get the application's base path.
+     * @return string
+     */
 	public function getAppBasePath(){
 		return dirname(__DIR__, 4);
 	}
 
+	/**
+     * Determine the framework(if any) used by the application.
+     * @return string|null
+     */
 	public function getFramework(){
 		return file_exists($this->getAppBasePath()."/artisan")? "laravel" : (file_exists($this->getAppBasePath()."/yii")? "yii" : null);
 	}
 
+	/**
+     * Get the exception trace as a string.
+     * @param Exception $exception
+     * @return string
+     */
 	public static function getExceptionTraceAsString($exception) {
 	    $rtn = "";
 	    $count = 0;

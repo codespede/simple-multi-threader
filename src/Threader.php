@@ -1,8 +1,20 @@
 <?php
+/**
+ * @package   simple-multi-threader
+ * @author    Mahesh S Warrier <maheshs60@gmail.com>
+ * @copyright Copyright &copy; Mahesh S Warrier, 2020
+ * @version   1.0.0
+ */
 namespace cs\simplemultithreader;
 use Opis\Closure\SerializableClosure;
 use function Opis\Closure\{serialize as s, unserialize as u};
+
+/**
+ * Class Threader
+ * @package codespede\simple-multi-threader
+ */
 class Threader{
+
     /**
      * @var Arguments for the closure
      */
@@ -26,8 +38,8 @@ class Threader{
     /**
      * @var Fully qualified class name of the Helper to be used
      */
-    public $helperClass = "cs\\\simplemultithreader\\\CommandHelper";
-	
+    public $helperClass = "cs\\simplemultithreader\\CommandHelper";
+
     /**
      * Threader constructor.
      * @param array $config
@@ -44,27 +56,26 @@ class Threader{
      */
     public function init(){
         $basePath = $this->getAppBasePath();
-    	if(!file_exists($basePath."/".$this->jobsDir))
-    		mkdir($basePath."/".$this->jobsDir, 0777);
-    	if(!file_exists($basePath."/".$this->logsDir))
-    		mkdir($basePath."/".$this->logsDir, 0777);
+        if(!file_exists($basePath."/".$this->jobsDir))
+            mkdir($basePath."/".$this->jobsDir, 0777);
+        if(!file_exists($basePath."/".$this->logsDir))
+            mkdir($basePath."/".$this->logsDir, 0777);
     }
 
     /**
      * Execute the given closure in a separate process.
      * @param Closure $closure
      */
-	public function thread($closure){
-		$jobId = md5(uniqid(rand(), true));
+    public function thread($closure){
+        $jobId = md5(uniqid(rand(), true));
         $jobsDir = $this->getAppBasePath()."/".$this->jobsDir;
-		file_put_contents("{$jobsDir}/{$jobId}_closure.ser", serialize(new SerializableClosure($closure)));
+        file_put_contents("{$jobsDir}/{$jobId}_closure.ser", serialize(new SerializableClosure($closure)));
         file_put_contents("{$jobsDir}/{$jobId}_arguments.ser", s($this->arguments));
-        $command = "php ".__DIR__."/thread.php {$jobId} {$this->jobsDir} {$this->logsDir} {$this->helperClass}";
+        $command = "php ".str_replace('\\', '/', __DIR__)."/thread.php {$jobId} {$this->jobsDir} {$this->logsDir} {$this->helperClass}";
         if(!self::isWindows() && $this->nohup)
-        	$command = "nohup {$command} > /dev/null 2>&1 &";
-        die($command);
-		shell_exec($command);
-	}
+            $command = "nohup {$command} > /dev/null 2>&1 &";
+        shell_exec($command);
+    }
 
     /**
      * Check whether the current environement is Windows or not.
