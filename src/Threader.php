@@ -65,6 +65,7 @@ class Threader{
     /**
      * Execute the given closure in a separate process.
      * @param Closure $closure
+     * @return string
      */
     public function thread($closure){
         $jobId = md5(uniqid(rand(), true));
@@ -75,6 +76,7 @@ class Threader{
         if(!self::isWindows() && $this->nohup)
             $command = "nohup {$command} > /dev/null 2>&1 &";
         shell_exec($command);
+        return $jobId;
     }
 
     /**

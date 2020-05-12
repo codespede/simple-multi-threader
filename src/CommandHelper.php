@@ -17,9 +17,9 @@ class CommandHelper
      * Execute bootstrapping code if required.
      */
 	public function bootstrap(){
-		if(is_null($framework = $this->getFramework()))
+		if(is_null($platform = $this->getPlatform()))
 			return;
-		$this->{"execute".ucfirst($framework)."Bootstrap"}();
+		$this->{"execute".ucfirst($platform)."Bootstrap"}();
 	}
 
 	/**
@@ -39,7 +39,7 @@ class CommandHelper
 	/**
      * Execute bootstrapping code for Yii2 Framework.
      */
-	public function executeYiiBootStrap(){
+	public function executeYii2BootStrap(){
 		$basePath = $this->getAppBasePath();
 		require($basePath . '/vendor/autoload.php');
 		require($basePath . '/vendor/yiisoft/yii2/Yii.php');
@@ -66,8 +66,8 @@ class CommandHelper
      * Determine the framework(if any) used by the application.
      * @return string|null
      */
-	public function getFramework(){
-		return file_exists($this->getAppBasePath()."/artisan")? "laravel" : (file_exists($this->getAppBasePath()."/yii")? "yii" : null);
+	public function getPlatform(){
+		return file_exists($this->getAppBasePath()."/artisan")? "laravel" : (file_exists($this->getAppBasePath()."/yii")? "yii2" : null);
 	}
 
 	/**
