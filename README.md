@@ -31,7 +31,7 @@ to the `require` section of your composer.json.
 How to use
 ----------
 
-If you want to run some code in the background, just provide it in a closure(anonymous function) to the class `Threader` as below:
+If you want to run some code in the background, just provide it in a closure(anonymous function) to an object of the class `Threader` as below:
 
 ```
 $threader = new cs\simplemultithreader\Threader(['arguments' => ['myObject' => new \stdClass, 'myArray' => ['a', 'b', 'c']]]);
