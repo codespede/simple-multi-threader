@@ -7,7 +7,7 @@ A simple PHP Multithreader extension which is ready for use without any setups o
 - Write the code you want to process in the background in a closure(anonymous function) along with arguments(if any) and provide it to the extension. That's all.
 - Works with Core PHP(Normal PHP), Laravel and Yii2 out of the box.
 - Can work with any PHP Framework/Platform by just adding the required bootstrap code(See [here](https://github.com/codespede/simple-multi-threader#making-it-compatible-with-the-platform-you-use)).
-- Compatible with PHP installations in Windows or \*nix(Unix like)
+- Compatible with PHP installations in Windows and \*nix(Unix like)
 
 Installation
 ------------
