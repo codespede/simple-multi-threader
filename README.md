@@ -6,7 +6,7 @@ A simple PHP Multithreader extension which is ready for use without any setups o
 - No need to integrate any Queues or similar implementations
 - Write the code you want to process in the background in a closure(anonymous function) along with arguments(if any) and provide it to the extension. That's all.
 - Works with Core PHP(Normal PHP), Laravel and Yii2 out of the box.
-- Can work with any PHP Framework/Platform by just adding the required bootstrap code(See below).
+- Can work with any PHP Framework/Platform by just adding the required bootstrap code(See [here](https://github.com/codespede/simple-multi-threader#making-it-compatible-with-the-platform-you-use)).
 
 Installation
 ------------
@@ -30,7 +30,7 @@ to the `require` section of your composer.json.
 How to use
 ----------
 
-If you want to run some code in the background, just provide it in a closure(anonymous function) to the extension object as below:
+If you want to run some code in the background, just provide it in a closure(anonymous function) to the class `Threader` as below:
 
 ```
 $threader = new cs\simplemultithreader\Threader(['arguments' => ['myObject' => new \stdClass, 'myArray' => ['a', 'b', 'c']]]);
@@ -40,18 +40,22 @@ $jobId = $threader->thread(function($arguments){
 });
 
 ```
-That's all, the Threader will create the required job files in the specified `$jobsDir` and will start a PHP process in the background executing your code. The main thread(code above and after `$threader->thread...`) will run without waiting for the sub-thread(code in the closure) to finish. You will also get the started job's id(an md5 string) as the return value of the method `thread` which you can use for debugging.
+That's all, the Threader will create the required job files in the specified `$jobsDir` and will start a PHP process in the background executing your code. The main thread(code above and after `$threader->thread...`) will run without waiting for the sub-thread(code in the closure) to finish. You will also get the started job's id(an md5 string) as the return value of the method `thread` which you can use for [debugging](https://github.com/codespede/simple-multi-threader#debugging).
 
 Any data returned from the closure function will be logged to a file with name `smt_<jobId>.log` in the default directory specified for logs: `smt-logs`.
 
 
 Configurable Options
 --------------------
-`$arguments` - Arguments for the closure - type: mixed, default = null
-`$jobsDir` - Directory where temporary job files will be stored - type: string, default = `"smt-jobs"`
-`$logsDir` - Directory where log files will be stored - type: string, default = `"smt-logs"`
-`$nohup` - Whether to ignore the HUP (hangup) signal in Unix based systems - type: boolean, default = `true`
-`$helperClass` - Fully qualified class name of the Helper to be used. - type: string, default = `"cs\\simplemultithreader\\CommandHelper"`
+ `$arguments` - Arguments for the closure - type: mixed, default = null
+ 
+ `$jobsDir` - Directory(auto-created if not existing) where temporary job files will be stored - type: string, default = `"smt-jobs"`
+ 
+ `$logsDir` - Directory(auto-created if not existing) where log files will be stored - type: string, default = `"smt-logs"`
+ 
+ `$nohup` - Whether to ignore the HUP (hangup) signal in Unix based systems - type: boolean, default = `true`
+ 
+ `$helperClass` - Fully qualified class name of the Helper to be used. - type: string, default =  `"cs\\simplemultithreader\\CommandHelper"`
 
 Any option above can be used to configure the Threader in the below way:
 ```
