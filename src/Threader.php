@@ -73,9 +73,14 @@ class Threader{
         file_put_contents("{$jobsDir}/{$jobId}_closure.ser", serialize(new SerializableClosure($closure)));
         file_put_contents("{$jobsDir}/{$jobId}_arguments.ser", s($this->arguments));
         $command = "php ".str_replace('\\', '/', __DIR__)."/thread.php {$jobId} {$this->jobsDir} {$this->logsDir} {$this->helperClass}";
-        if(!self::isWindows() && $this->nohup)
-            $command = "nohup {$command} > /dev/null 2>&1 &";
-        shell_exec($command);
+        if(!self::isWindows()){
+            $command = ($this->nohup? "nohup " : "") . "{$command} > /dev/null 2>&1 &";
+            shell_exec($command);
+        }
+        elseif(self::isWindows()){
+            $WshShell = new \COM("WScript.Shell");
+            $WshShell->Run($command, 0, false);
+        }
         return $jobId;
     }
 
