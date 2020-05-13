@@ -101,6 +101,7 @@ There are two ways to accomplish this:
    By doing this just once, the extension is now ready for executing any code(normal and platform related) anywhere in your Platform.
    You're also getting the freedom to override any additional logic defined in the `CommandHelper` class.
 
+   **Pull Requests for supporting additional platforms are always welcome!**
 
 Debugging
 ---------
