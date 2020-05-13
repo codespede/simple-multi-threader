@@ -7,6 +7,7 @@ A simple PHP Multithreader extension which is ready for use without any setups o
 - Write the code you want to process in the background in a closure(anonymous function) along with arguments(if any) and provide it to the extension. That's all.
 - Works with Core PHP(Normal PHP), Laravel and Yii2 out of the box.
 - Can work with any PHP Framework/Platform by just adding the required bootstrap code(See [here](https://github.com/codespede/simple-multi-threader#making-it-compatible-with-the-platform-you-use)).
+- Compatible with PHP installations in Windows and \*nix(Unix like)
 
 Installation
 ------------
@@ -16,7 +17,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require codespede/simple-multi-threader
+composer require codespede/simple-multi-threader
 ```
 
 or add
@@ -30,7 +31,7 @@ to the `require` section of your composer.json.
 How to use
 ----------
 
-If you want to run some code in the background, just provide it in a closure(anonymous function) to the class `Threader` as below:
+If you want to run some code in the background, just provide it in a closure(anonymous function) to an object of the class `Threader` as below:
 
 ```
 $threader = new cs\simplemultithreader\Threader(['arguments' => ['myObject' => new \stdClass, 'myArray' => ['a', 'b', 'c']]]);
@@ -100,6 +101,7 @@ There are two ways to accomplish this:
    By doing this just once, the extension is now ready for executing any code(normal and platform related) anywhere in your Platform.
    You're also getting the freedom to override any additional logic defined in the `CommandHelper` class.
 
+   **Pull Requests for supporting additional platforms are always welcome!**
 
 Debugging
 ---------
