@@ -19,4 +19,4 @@ $jobId = $threader->thread(function($arguments){
 ```
 By using like this, the request won't have to wait for the mail sending to be finished(as it's a parallel process) and hence will get finished instantly(if no other time consuming code is present).
 
-You can start any number of threads like this from the any script which will all get processed parallelly as independant PHP processes.
+You can start any number of threads like this from any script which will all get processed parallelly as independant PHP processes.
