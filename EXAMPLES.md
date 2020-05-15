@@ -1,6 +1,6 @@
 Example 1
 =========
-Suppose you have a time consuming task to be done(like sending emails to 100,000 member of your website) but you don't want the current request sent from the browser to wait until the mail sending process is finished.
+Suppose you have a time consuming task to be done(like sending an email to say 100,000 members of your website) but you don't want the current request sent from the browser to wait until the mail sending process is finished.
 
 So, suppose the below line of code sends the message to all members:
 
