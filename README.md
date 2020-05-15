@@ -45,6 +45,7 @@ That's all, the Threader will create the required job files in the specified `$j
 
 Any data returned from the closure function will be logged to a file with name `smt_<jobId>.log` in the default directory specified for logs: `smt-logs`.
 
+For examples, [click here](https://github.com/codespede/simple-multi-threader/blob/master/EXAMPLES.md)
 
 Configurable Options
 --------------------
