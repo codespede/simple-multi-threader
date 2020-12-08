@@ -72,7 +72,7 @@ class Threader{
         $jobsDir = $this->getAppBasePath()."/".$this->jobsDir;
         file_put_contents("{$jobsDir}/{$jobId}_closure.ser", serialize(new SerializableClosure($closure)));
         file_put_contents("{$jobsDir}/{$jobId}_arguments.ser", s($this->arguments));
-        $command = "php ".str_replace('\\', '/', __DIR__)."/thread.php {$jobId} {$this->jobsDir} {$this->logsDir} {$this->helperClass}";
+        $command = "php '".str_replace('\\', '/', __DIR__)."/thread.php' '{$jobId}' '{$this->jobsDir}' '{$this->logsDir}' '{$this->helperClass}'";
         if(!self::isWindows()){
             $command = ($this->nohup? "nohup " : "") . "{$command} > /dev/null 2>&1 &";
             shell_exec($command);
