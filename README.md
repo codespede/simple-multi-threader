@@ -3,6 +3,8 @@ Simple Multi Threader
 
 A simple PHP Multithreader extension which is ready for use without any setups or configurations.
 
+<p align="center"><img src="https://i.redd.it/bhbx9hz4w2z41.png" height="70%" width="70%" style="margin-left: auto; margin-right: auto;"/></p>
+
 - No need to integrate any Queues or similar implementations
 - Write the code you want to process in the background in a closure(anonymous function) along with arguments(if any) and provide it to the extension. That's all.
 - Works with Core PHP(Normal PHP), Laravel and Yii2 out of the box.
